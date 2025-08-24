@@ -88,3 +88,5 @@ A fully-featured chess game built with HTML, CSS, and JavaScript. Play against A
 
 - Fixed issue where game would stop accepting moves when a player was in check
 - Game now properly continues allowing legal moves while in check state
+- Bot now correctly responds when put in check by the human player
+- Enhanced bot move triggering logic for better gameplay continuity
