@@ -487,7 +487,7 @@ class ChessGame {
         this.updateGameInfo();
         
         // If it's now the bot's turn, make a move
-        if (this.currentPlayer === this.botColor && this.gameStatus === 'playing') {
+        if (this.currentPlayer === this.botColor && (this.gameStatus === 'playing' || this.gameStatus === 'check')) {
             setTimeout(() => this.makeBotMove(), 500);
         }
     }
@@ -717,8 +717,9 @@ class ChessGame {
                 this.clearSelection();
                 this.updateGameInfo();
                 
-                // Bot move after human move
-                if (this.gameMode === 'human-vs-bot' && (this.gameStatus === 'playing' || this.gameStatus === 'check')) {
+                // Bot move after human move - ensure bot responds even when put in check
+                if (this.gameMode === 'human-vs-bot' && this.currentPlayer === this.botColor && 
+                    (this.gameStatus === 'playing' || this.gameStatus === 'check')) {
                     setTimeout(() => this.makeBotMove(), 500);
                 }
             } else {
@@ -1089,13 +1090,20 @@ class ChessGame {
     
     // Bot AI Methods
     async makeBotMove() {
-        if (this.gameStatus !== 'playing' && this.gameStatus !== 'check') return;
+        // Bot should continue playing when game is active (playing or in check)
+        if (this.gameStatus !== 'playing' && this.gameStatus !== 'check') {
+            console.log('Bot cannot move - game status:', this.gameStatus);
+            return;
+        }
         
         // Check if current player should be controlled by bot
         const shouldBotPlay = this.gameMode === 'bot-vs-bot' || 
                              (this.gameMode === 'human-vs-bot' && this.currentPlayer === this.botColor);
         
-        if (!shouldBotPlay) return;
+        if (!shouldBotPlay) {
+            console.log('Bot should not play - game mode:', this.gameMode, 'current player:', this.currentPlayer, 'bot color:', this.botColor);
+            return;
+        }
         
         this.isThinking = true;
         this.updateGameInfo();
