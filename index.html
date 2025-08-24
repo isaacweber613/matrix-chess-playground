@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Chess Game</h1>
+        
+        <div class="game-setup" id="game-setup">
+            <h2>Game Setup</h2>
+            
+            <div class="setup-section">
+                <label for="game-mode">Game Mode:</label>
+                <select id="game-mode">
+                    <option value="human-vs-human">Human vs Human</option>
+                    <option value="human-vs-bot" selected>Human vs Bot</option>
+                    <option value="bot-vs-bot">Bot vs Bot</option>
+                </select>
+            </div>
+            
+            <div class="setup-section" id="bot-settings">
+                <label for="bot-difficulty">Bot Difficulty:</label>
+                <select id="bot-difficulty">
+                    <option value="1">Level 1 (Beginner)</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5" selected>Level 5 (Intermediate)</option>
+                    <option value="6">Level 6</option>
+                    <option value="7">Level 7</option>
+                    <option value="8">Level 8</option>
+                    <option value="9">Level 9</option>
+                    <option value="10">Level 10 (Expert)</option>
+                </select>
+            </div>
+            
+            <div class="setup-section" id="bot-vs-bot-settings" style="display: none;">
+                <label for="white-bot-difficulty">White Bot:</label>
+                <select id="white-bot-difficulty">
+                    <option value="1">Level 1 (Beginner)</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5" selected>Level 5 (Intermediate)</option>
+                    <option value="6">Level 6</option>
+                    <option value="7">Level 7</option>
+                    <option value="8">Level 8</option>
+                    <option value="9">Level 9</option>
+                    <option value="10">Level 10 (Expert)</option>
+                </select>
+                
+                <label for="black-bot-difficulty">Black Bot:</label>
+                <select id="black-bot-difficulty">
+                    <option value="1">Level 1 (Beginner)</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Level 3</option>
+                    <option value="4">Level 4</option>
+                    <option value="5">Level 5</option>
+                    <option value="6">Level 6</option>
+                    <option value="7" selected>Level 7</option>
+                    <option value="8">Level 8</option>
+                    <option value="9">Level 9</option>
+                    <option value="10">Level 10 (Expert)</option>
+                </select>
+            </div>
+            
+            <div class="setup-section" id="color-selection">
+                <label for="player-color">Your Color:</label>
+                <select id="player-color">
+                    <option value="white">White (First)</option>
+                    <option value="black">Black (Second)</option>
+                    <option value="random" selected>Random</option>
+                </select>
+            </div>
+            
+            <button id="start-game">Start Game</button>
+            <button id="view-history">📚 Game History</button>
+        </div>
+        
+        <div class="game-area" id="game-area" style="display: none;">
+            <div class="game-info">
+                <div class="current-player">Current Player: <span id="current-player">White</span></div>
+                <div class="game-status" id="game-status">Game in progress</div>
+                <div class="game-mode-info" id="game-mode-info"></div>
+            </div>
+            <div class="chess-board" id="chess-board"></div>
+            <div class="controls">
+                <div class="control-row">
+                    <button id="reset-game">🔄 New Game</button>
+                    <button id="back-to-setup">⚙️ Settings</button>
+                    <button id="toggle-sound">🔊 Sound: ON</button>
+                </div>
+                <div class="control-row">
+                    <button id="undo-move">↶ Undo</button>
+                    <button id="switch-sides">🔀 Switch Sides</button>
+                    <button id="flip-board">↕️ Flip Board</button>
+                    <button id="hint-move">💡 Hint</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game History Modal -->
+        <div id="history-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Game History</h3>
+                    <button id="close-history">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="history-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="chess.js"></script>
+</body>
+</html>
