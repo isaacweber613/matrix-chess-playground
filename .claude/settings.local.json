@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(claude config)",
+      "Bash(claude config list)",
+      "Read(/C:\\Users\\User\\AppData\\Roaming\\npm/**)",
+      "Bash(echo $PATH)",
+      "Bash(powershell:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

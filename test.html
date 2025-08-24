@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chess Debug</title>
+</head>
+<body>
+    <div id="chess-board"></div>
+    <div id="current-player">White</div>
+    <div id="game-status">Game in progress</div>
+    <button id="reset-game">Reset</button>
+    
+    <script>
+        // Simple test to check if the code loads
+        console.log("Starting chess game...");
+        
+        try {
+            class ChessGame {
+                constructor() {
+                    console.log("ChessGame constructor called");
+                    this.boardElement = document.getElementById('chess-board');
+                    this.currentPlayerElement = document.getElementById('current-player');
+                    this.gameStatusElement = document.getElementById('game-status');
+                    
+                    if (!this.boardElement) {
+                        console.error("chess-board element not found");
+                        return;
+                    }
+                    
+                    console.log("Creating basic board");
+                    this.boardElement.innerHTML = '<div style="width:50px;height:50px;background:red;" onclick="console.log(\'Clicked!\')">TEST</div>';
+                }
+            }
+            
+            const game = new ChessGame();
+            console.log("Game created successfully");
+            
+        } catch (error) {
+            console.error("Error creating game:", error);
+        }
+    </script>
+</body>
+</html>

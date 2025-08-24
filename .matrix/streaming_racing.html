@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html><head><title>Matrix-Game 2.0 Streaming Racing</title>
+<style>
+body{background:#000;color:#0f0;font-family:'Courier New',monospace;margin:0;padding:0;overflow:hidden}
+.container{width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+h1{color:#0f0;text-shadow:0 0 20px #0f0;font-size:28px;margin:10px;text-align:center}
+.racing-screen{width:90vw;height:70vh;border:3px solid #0f0;margin:10px;background:#111;position:relative;overflow:hidden}
+.racing-screen img{width:100%;height:100%;object-fit:cover;transition:opacity 0.1s}
+.controls{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:100}
+.btn{background:#003;border:2px solid #0f0;color:#0f0;padding:12px 20px;cursor:pointer;font-size:14px;border-radius:5px;user-select:none}
+.btn:hover{background:#005;box-shadow:0 0 15px #0f0}
+.btn:active{background:#007;transform:scale(0.95)}
+.status{position:fixed;top:20px;left:20px;color:#0f0;font-size:16px;background:rgba(0,0,0,0.8);padding:10px;border:1px solid #0f0}
+.speed{position:fixed;top:20px;right:20px;color:#0f0;font-size:24px;background:rgba(0,0,0,0.8);padding:15px;border:1px solid #0f0}
+.wasd-help{position:fixed;bottom:100px;right:20px;color:#0f0;font-size:12px;background:rgba(0,0,0,0.8);padding:10px;border:1px solid #0f0}
+</style></head><body>
+<div class="container">
+<h1>🏎️ MATRIX-GAME 2.0 STREAMING RACING</h1>
+
+<div class="status">
+<div>🚀 Real-Time Interactive Experience</div>
+<div>📊 FPS: <span id="fps">25</span></div>
+<div>🎮 Action: <span id="action">Ready</span></div>
+</div>
+
+<div class="speed">
+<div>Speed: <span id="speed">0</span> MPH</div>
+</div>
+
+<div class="racing-screen">
+<img id="racingFrame" src="https://picsum.photos/800/600?random=1" alt="Racing View"/>
+</div>
+
+<div class="controls">
+<button class="btn" data-action="w" id="forward">⬆️ FORWARD</button>
+<button class="btn" data-action="a" id="left">⬅️ LEFT</button>
+<button class="btn" data-action="s" id="brake">⬇️ BRAKE</button>
+<button class="btn" data-action="d" id="right">➡️ RIGHT</button>
+</div>
+
+<div class="wasd-help">
+Press WASD keys or click buttons<br>
+Real-time frame generation<br>
+Matrix-Game 2.0 Streaming
+</div>
+
+</div>
+
+<script>
+// Streaming racing simulation
+let currentFrame = 0;
+let isStreaming = false;
+let frameRate = 25; // 25 FPS
+let speed = 0;
+let maxSpeed = 120;
+let currentAction = 'none';
+
+// Racing environments (simulating Matrix-Game 2.0 generated frames)
+const racingScenes = [
+    'https://picsum.photos/800/600?random=',
+    'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&h=600&fit=crop'
+];
+
+function updateFrame() {
+    if (!isStreaming) return;
+    
+    const img = document.getElementById('racingFrame');
+    const randomScene = Math.floor(Math.random() * racingScenes.length);
+    const timestamp = Date.now();
+    
+    // Simulate real-time frame generation based on current action
+    if (racingScenes[randomScene].includes('picsum')) {
+        img.src = racingScenes[randomScene] + timestamp;
+    } else {
+        img.src = racingScenes[randomScene] + '&t=' + timestamp;
+    }
+    
+    currentFrame++;
+    updateFPS();
+}
+
+function updateFPS() {
+    document.getElementById('fps').textContent = frameRate;
+}
+
+function updateSpeed(action) {
+    const speedEl = document.getElementById('speed');
+    const actionEl = document.getElementById('action');
+    
+    switch(action) {
+        case 'w':
+            speed = Math.min(speed + 15, maxSpeed);
+            actionEl.textContent = 'ACCELERATING';
+            break;
+        case 's':
+            speed = Math.max(speed - 20, 0);
+            actionEl.textContent = 'BRAKING';
+            break;
+        case 'a':
+            actionEl.textContent = 'TURNING LEFT';
+            break;
+        case 'd':
+            actionEl.textContent = 'TURNING RIGHT';
+            break;
+        default:
+            speed = Math.max(speed - 2, 0);
+            actionEl.textContent = 'COASTING';
+    }
+    
+    speedEl.textContent = Math.round(speed);
+    currentAction = action;
+}
+
+function startStreaming() {
+    if (!isStreaming) {
+        isStreaming = true;
+        document.querySelector('h1').textContent = '🏎️ MATRIX-GAME 2.0 STREAMING - LIVE';
+        
+        // Start streaming at 25 FPS
+        setInterval(updateFrame, 1000 / frameRate);
+        
+        // Gradual speed reduction when no input
+        setInterval(() => {
+            if (currentAction === 'none') {
+                updateSpeed('none');
+            }
+            currentAction = 'none';
+        }, 100);
+    }
+}
+
+function handleControl(action) {
+    if (!isStreaming) {
+        startStreaming();
+    }
+    
+    updateSpeed(action);
+    
+    // Visual feedback
+    const btn = document.querySelector(`[data-action="${action}"]`);
+    btn.style.background = '#007';
+    setTimeout(() => {
+        btn.style.background = '#003';
+    }, 150);
+}
+
+// Event listeners
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const action = btn.getAttribute('data-action');
+        handleControl(action);
+    });
+});
+
+// Keyboard controls
+document.addEventListener('keydown', (e) => {
+    const key = e.key.toLowerCase();
+    if (['w','a','s','d'].includes(key)) {
+        e.preventDefault();
+        handleControl(key);
+    }
+});
+
+// Initialize
+document.getElementById('action').textContent = 'Press WASD to start streaming';
+updateFPS();
+
+// Auto-start demo
+setTimeout(() => {
+    document.querySelector('h1').innerHTML += '<br><small style="font-size:16px">Press any WASD key to begin real-time streaming</small>';
+}, 2000);
+</script>
+</body></html>

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:matrix.org)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:huggingface.co)",
+      "Bash(ssh:*)",
+      "Bash(cat:*)",
+      "Read(/C:\\Users\\User\\Downloads/**)",
+      "Bash(scp:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\Users\\User\\.ssh"
+    ]
+  }
+}
